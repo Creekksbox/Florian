@@ -1,43 +1,6 @@
-/////////////////////////////////////////////////////
-// VARIABLES
-/////////////////////////////////////////////////////
+const Prism = require('./Prism');
+const MediaTranscoder = require('./transcoders/MediaTranscoder');
 
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const configs = require("./configs.json");
-const fivereborn = require('fivereborn-query');
-const token = pross.env.token
-client.config = configs;
+Prism.MediaTranscoder = MediaTranscoder;
 
-/////////////////////////////////////////////////////
-// DEMARRER LE BOT
-/////////////////////////////////////////////////////
-
-client.login(configs.token)
-  .then(
-    () => {
-      console.log("Bot démarré");
-      console.log("Collecte d'informations en cours... ");
-    },
-    () => {
-      client.destroy();
-      console.log("Bot détruit!");
-    });
-
-/////////////////////////////////////////////////////
-// FONCTION (A NE PAS MODIFIER)
-/////////////////////////////////////////////////////
-
-function activity() {
-  setTimeout(() => {
-    fivereborn.query(configs.serverInfo[0], configs.serverInfo[1], (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        client.user.setActivity(" online " + data.clients + "/" + data.maxclients, { type: configs.activityType });
-      }
-    });
-    activity();
-  }, 10000);
-}
-activity();
+module.exports = Prism;
